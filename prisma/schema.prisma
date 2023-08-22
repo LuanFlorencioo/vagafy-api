@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               BigInt    @id @default(autoincrement()) @db.BigInt
+  username         String    @db.VarChar(20)
+  email            String    @unique @db.VarChar(50)
+  password         String    @db.VarChar(255)
+  avatar_url       String?   @db.VarChar(255)
+  is_disabled      Boolean   @default(false)
+  is_authenticated Boolean   @default(false)
+  created_at       DateTime  @default(now())
+  disabled_at      DateTime?
+  token            String?   @db.VarChar(4)
+  google_id        String?
+  google_email     String?
+  jobs             Job[]
+
+  @@map("users")
+}
+
+model Job {
+  id          BigInt     @id @default(autoincrement()) @db.BigInt
+  title       String     @db.VarChar(50)
+  description String?    @db.Text
+  link        String     @db.VarChar(255)
+  created_at  DateTime   @default(now())
+  user        User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id     BigInt
+  company     Company?
+  recruiter   Recruiter?
+  progress    Progress?
+
+  @@map("jobs")
+}
+
+model Company {
+  id       BigInt @id @default(autoincrement()) @db.BigInt
+  name     String @db.VarChar(50)
+  linkedin String @db.VarChar(255)
+  website  String @db.VarChar(255)
+  logo_url String @db.VarChar(255)
+  job      Job    @relation(fields: [job_id], references: [id])
+  job_id   BigInt @unique
+
+  @@map("companies")
+}
+
+model Recruiter {
+  id       BigInt @id @default(autoincrement()) @db.BigInt
+  name     String @db.VarChar(20)
+  linkedin String @db.VarChar(255)
+  job      Job    @relation(fields: [job_id], references: [id])
+  job_id   BigInt @unique
+
+  @@map("recruiters")
+}
+
+model Progress {
+  id          BigInt       @id @default(autoincrement()) @db.BigInt
+  is_finished Boolean      @default(false)
+  updated_at  DateTime     @updatedAt()
+  meeting_at  DateTime?
+  status      STATUS       @default(PENDING)
+  job         Job          @relation(fields: [job_id], references: [id])
+  job_id      BigInt       @unique
+  checkpoints Checkpoint[]
+
+  @@map("progress")
+}
+
+model Checkpoint {
+  id          BigInt   @id @default(autoincrement()) @db.BigInt
+  title       String   @db.VarChar(50)
+  description String?  @db.Text
+  created_at  DateTime @default(now())
+  progress    Progress @relation(fields: [progress_id], references: [id])
+  progress_id BigInt
+
+  @@map("checkpoints")
+}
+
+enum STATUS {
+  PENDING
+  POSITIVE
+  NEGATIVE
+}
