@@ -33,17 +33,23 @@ export class UsersService {
   async signIn({ email, password }: SignInDto) {
     const findUser: User | null = await this.usersRepository.findByEmail(email);
     if (!findUser) {
-      throw new UnauthorizedException('Credenciais inválida');
+      throw new UnauthorizedException('Credenciais inválidas');
     }
 
     const isSamePassword = bcrypt.compareSync(password, findUser.password);
     if (!isSamePassword) {
-      throw new UnauthorizedException('Credenciais inválida');
+      throw new UnauthorizedException('Credenciais inválidas');
     }
 
-    const payload = { sub: findUser.id, userEmail: findUser.email };
+    const payload = { sub: findUser.id, email: findUser.email };
     const access_token = await this.jwtService.signAsync(payload);
 
     return { access_token };
+  }
+
+  async getUserData(userEmail: string) {
+    const user: User = await this.usersRepository.findByEmail(userEmail);
+
+    return plainToInstance(User, user);
   }
 }
