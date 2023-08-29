@@ -5,9 +5,13 @@ import {
   MinLength,
   MaxLength,
 } from 'class-validator';
-import { errorMessage } from 'src/errors/ValidationMessage';
-
-const { isEmail, isNotEmpty, isString, maxLength, minLength } = errorMessage;
+import {
+  isEmail,
+  isNotEmpty,
+  isString,
+  maxLength,
+  minLength,
+} from 'src/utils/message-validation';
 
 export class SignInDto {
   @IsEmail({}, { message: isEmail('email') })

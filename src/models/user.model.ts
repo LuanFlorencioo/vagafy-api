@@ -9,9 +9,13 @@ export class User {
 
   avatar_url?: string;
 
+  is_authenticated: boolean;
+
   is_disabled: boolean;
 
-  is_authenticated: boolean;
+  google_id?: string;
+
+  google_email?: string;
 
   readonly created_at: Date;
 
@@ -22,10 +26,4 @@ export class User {
 
   @Exclude({ toClassOnly: true })
   token?: string;
-
-  @Exclude({ toClassOnly: true })
-  google_id?: string;
-
-  @Exclude({ toClassOnly: true })
-  google_email?: string;
 }

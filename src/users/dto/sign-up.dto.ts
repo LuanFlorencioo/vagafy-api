@@ -6,9 +6,13 @@ import {
   MaxLength,
   IsOptional,
 } from 'class-validator';
-import { errorMessage } from 'src/errors/ValidationMessage';
-
-const { isEmail, isNotEmpty, isString, maxLength, minLength } = errorMessage;
+import {
+  isEmail,
+  isNotEmpty,
+  isString,
+  maxLength,
+  minLength,
+} from 'src/utils/message-validation';
 
 export class SignUpDto {
   @MaxLength(20, { message: maxLength('username', 20) })
