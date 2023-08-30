@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id               BigInt    @id @default(autoincrement()) @db.BigInt
+  id               Int       @id @default(autoincrement())
   username         String    @db.VarChar(20)
   email            String    @unique @db.VarChar(50)
   password         String    @db.VarChar(255)
@@ -29,13 +29,13 @@ model User {
 }
 
 model Job {
-  id          BigInt     @id @default(autoincrement()) @db.BigInt
+  id          Int        @id @default(autoincrement())
   title       String     @db.VarChar(50)
   description String?    @db.Text
   link        String     @db.VarChar(255)
   created_at  DateTime   @default(now())
   user        User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  user_id     BigInt
+  user_id     Int
   company     Company?
   recruiter   Recruiter?
   progress    Progress?
@@ -44,47 +44,47 @@ model Job {
 }
 
 model Company {
-  id       BigInt @id @default(autoincrement()) @db.BigInt
+  id       Int    @id @default(autoincrement())
   name     String @db.VarChar(50)
   linkedin String @db.VarChar(255)
   website  String @db.VarChar(255)
   logo_url String @db.VarChar(255)
   job      Job    @relation(fields: [job_id], references: [id])
-  job_id   BigInt @unique
+  job_id   Int    @unique
 
   @@map("companies")
 }
 
 model Recruiter {
-  id       BigInt @id @default(autoincrement()) @db.BigInt
+  id       Int    @id @default(autoincrement())
   name     String @db.VarChar(20)
   linkedin String @db.VarChar(255)
   job      Job    @relation(fields: [job_id], references: [id])
-  job_id   BigInt @unique
+  job_id   Int    @unique
 
   @@map("recruiters")
 }
 
 model Progress {
-  id          BigInt       @id @default(autoincrement()) @db.BigInt
+  id          Int          @id @default(autoincrement())
   is_finished Boolean      @default(false)
   updated_at  DateTime     @updatedAt()
   meeting_at  DateTime?
   status      STATUS       @default(PENDING)
   job         Job          @relation(fields: [job_id], references: [id])
-  job_id      BigInt       @unique
+  job_id      Int          @unique
   checkpoints Checkpoint[]
 
   @@map("progress")
 }
 
 model Checkpoint {
-  id          BigInt   @id @default(autoincrement()) @db.BigInt
+  id          Int      @id @default(autoincrement())
   title       String   @db.VarChar(50)
   description String?  @db.Text
   created_at  DateTime @default(now())
   progress    Progress @relation(fields: [progress_id], references: [id])
-  progress_id BigInt
+  progress_id Int
 
   @@map("checkpoints")
 }

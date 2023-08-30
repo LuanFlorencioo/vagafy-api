@@ -3,7 +3,7 @@ CREATE TYPE "STATUS" AS ENUM ('PENDING', 'POSITIVE', 'NEGATIVE');
 
 -- CreateTable
 CREATE TABLE "users" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "username" VARCHAR(20) NOT NULL,
     "email" VARCHAR(50) NOT NULL,
     "password" VARCHAR(255) NOT NULL,
@@ -21,57 +21,57 @@ CREATE TABLE "users" (
 
 -- CreateTable
 CREATE TABLE "jobs" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "title" VARCHAR(50) NOT NULL,
     "description" TEXT,
     "link" VARCHAR(255) NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "user_id" BIGINT NOT NULL,
+    "user_id" INTEGER NOT NULL,
 
     CONSTRAINT "jobs_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "companies" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" VARCHAR(50) NOT NULL,
     "linkedin" VARCHAR(255) NOT NULL,
     "website" VARCHAR(255) NOT NULL,
     "logo_url" VARCHAR(255) NOT NULL,
-    "job_id" BIGINT NOT NULL,
+    "job_id" INTEGER NOT NULL,
 
     CONSTRAINT "companies_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "recruiters" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" VARCHAR(20) NOT NULL,
     "linkedin" VARCHAR(255) NOT NULL,
-    "job_id" BIGINT NOT NULL,
+    "job_id" INTEGER NOT NULL,
 
     CONSTRAINT "recruiters_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "progress" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "is_finished" BOOLEAN NOT NULL DEFAULT false,
     "updated_at" TIMESTAMP(3) NOT NULL,
     "meeting_at" TIMESTAMP(3),
     "status" "STATUS" NOT NULL DEFAULT 'PENDING',
-    "job_id" BIGINT NOT NULL,
+    "job_id" INTEGER NOT NULL,
 
     CONSTRAINT "progress_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "checkpoints" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "title" VARCHAR(50) NOT NULL,
     "description" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "progress_id" BIGINT NOT NULL,
+    "progress_id" INTEGER NOT NULL,
 
     CONSTRAINT "checkpoints_pkey" PRIMARY KEY ("id")
 );
