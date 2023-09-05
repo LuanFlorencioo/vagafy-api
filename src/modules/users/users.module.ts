@@ -36,6 +36,6 @@ import { UserValidationService } from 'src/utils/user-validation.service';
     UserValidationService,
     MailService,
   ],
-  exports: [UsersService],
+  exports: [UsersService, UsersRepository, MailService, UserValidationService],
 })
 export class UsersModule {}
