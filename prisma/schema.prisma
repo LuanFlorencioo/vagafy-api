@@ -49,8 +49,8 @@ model Company {
   linkedin String @db.VarChar(255)
   website  String @db.VarChar(255)
   logo_url String @db.VarChar(255)
-  job      Job    @relation(fields: [job_id], references: [id])
-  job_id   Int    @unique
+  job      Job?   @relation(fields: [job_id], references: [id], onDelete: Cascade)
+  job_id   Int?   @unique
 
   @@map("companies")
 }
@@ -59,7 +59,7 @@ model Recruiter {
   id       Int    @id @default(autoincrement())
   name     String @db.VarChar(20)
   linkedin String @db.VarChar(255)
-  job      Job    @relation(fields: [job_id], references: [id])
+  job      Job    @relation(fields: [job_id], references: [id], onDelete: Cascade)
   job_id   Int    @unique
 
   @@map("recruiters")
@@ -71,7 +71,7 @@ model Progress {
   updated_at  DateTime     @updatedAt()
   meeting_at  DateTime?
   status      STATUS       @default(PENDING)
-  job         Job          @relation(fields: [job_id], references: [id])
+  job         Job          @relation(fields: [job_id], references: [id], onDelete: Cascade)
   job_id      Int          @unique
   checkpoints Checkpoint[]
 
@@ -83,7 +83,7 @@ model Checkpoint {
   title       String   @db.VarChar(50)
   description String?  @db.Text
   created_at  DateTime @default(now())
-  progress    Progress @relation(fields: [progress_id], references: [id])
+  progress    Progress @relation(fields: [progress_id], references: [id], onDelete: Cascade)
   progress_id Int
 
   @@map("checkpoints")
