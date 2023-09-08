@@ -10,5 +10,6 @@ import { JobsStatsService } from 'src/utils/jobs-stats.service';
   imports: [UsersModule],
   controllers: [JobsController],
   providers: [JobsService, JobsRepository, PrismaService, JobsStatsService],
+  exports: [JobsService],
 })
 export class JobsModule {}
