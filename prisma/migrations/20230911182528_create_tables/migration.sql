@@ -38,7 +38,7 @@ CREATE TABLE "companies" (
     "linkedin" VARCHAR(255) NOT NULL,
     "website" VARCHAR(255) NOT NULL,
     "logo_url" VARCHAR(255) NOT NULL,
-    "job_id" INTEGER NOT NULL,
+    "job_id" INTEGER,
 
     CONSTRAINT "companies_pkey" PRIMARY KEY ("id")
 );
@@ -92,13 +92,13 @@ CREATE UNIQUE INDEX "progress_job_id_key" ON "progress"("job_id");
 ALTER TABLE "jobs" ADD CONSTRAINT "jobs_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "companies" ADD CONSTRAINT "companies_job_id_fkey" FOREIGN KEY ("job_id") REFERENCES "jobs"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "companies" ADD CONSTRAINT "companies_job_id_fkey" FOREIGN KEY ("job_id") REFERENCES "jobs"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "recruiters" ADD CONSTRAINT "recruiters_job_id_fkey" FOREIGN KEY ("job_id") REFERENCES "jobs"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "recruiters" ADD CONSTRAINT "recruiters_job_id_fkey" FOREIGN KEY ("job_id") REFERENCES "jobs"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "progress" ADD CONSTRAINT "progress_job_id_fkey" FOREIGN KEY ("job_id") REFERENCES "jobs"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "progress" ADD CONSTRAINT "progress_job_id_fkey" FOREIGN KEY ("job_id") REFERENCES "jobs"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "checkpoints" ADD CONSTRAINT "checkpoints_progress_id_fkey" FOREIGN KEY ("progress_id") REFERENCES "progress"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "checkpoints" ADD CONSTRAINT "checkpoints_progress_id_fkey" FOREIGN KEY ("progress_id") REFERENCES "progress"("id") ON DELETE CASCADE ON UPDATE CASCADE;
