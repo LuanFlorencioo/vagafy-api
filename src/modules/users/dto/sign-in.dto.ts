@@ -14,6 +14,7 @@ import {
 } from 'src/utils/message-validation';
 
 export class SignInDto {
+  @MaxLength(50, { message: maxLength('email', 50) })
   @IsEmail({}, { message: isEmail('email') })
   @IsString({ message: isString('email') })
   @IsNotEmpty({ message: isNotEmpty('email') })

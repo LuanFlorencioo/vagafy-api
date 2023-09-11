@@ -9,6 +9,7 @@ import {
 import {
   isNotEmpty,
   isString,
+  isUrl,
   maxLength,
   minLength,
 } from 'src/utils/message-validation';
@@ -27,7 +28,7 @@ export class UpdateJobDto {
 
   @IsOptional()
   @MaxLength(255, { message: maxLength('link', 255) })
-  @IsUrl({}, { message: 'link precisa ser um link' })
+  @IsUrl({}, { message: isUrl('link') })
   @IsString({ message: isString('link') })
   @IsNotEmpty({ message: isNotEmpty('link') })
   link?: string;

@@ -1,3 +1,4 @@
+import { STATUS } from '@prisma/client';
 import {
   IsString,
   IsOptional,
@@ -11,13 +12,8 @@ import {
   isNotEmpty,
   maxLength,
   minLength,
+  isStatus,
 } from 'src/utils/message-validation';
-
-enum STATUS {
-  PENDING = 'PENDING',
-  POSITIVE = 'POSITIVE',
-  NEGATIVE = 'NEGATIVE',
-}
 
 export class CreateCheckpointDto {
   @MaxLength(50, { message: maxLength('title', 50) })
@@ -34,8 +30,6 @@ export class CreateCheckpointDto {
   @IsOptional()
   @IsString({ message: isString('status') })
   @IsNotEmpty({ message: isNotEmpty('status') })
-  @IsEnum(STATUS, {
-    message: 'status - deve ser apenas: PENDING, POSITIVE, NEGATIVE',
-  })
+  @IsEnum(STATUS, { message: isStatus() })
   status?: 'PENDING' | 'POSITIVE' | 'NEGATIVE';
 }
