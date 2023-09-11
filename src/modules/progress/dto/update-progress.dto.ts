@@ -1,11 +1,13 @@
+import { STATUS } from '@prisma/client';
 import {
   IsString,
   IsNotEmpty,
   IsOptional,
   IsBoolean,
   IsDate,
+  IsEnum,
 } from 'class-validator';
-import { isNotEmpty, isString } from 'src/utils/message-validation';
+import { isNotEmpty, isStatus, isString } from 'src/utils/message-validation';
 
 export class UpdateProgressDto {
   @IsOptional()
@@ -19,5 +21,6 @@ export class UpdateProgressDto {
   @IsOptional()
   @IsString({ message: isString('status') })
   @IsNotEmpty({ message: isNotEmpty('status') })
-  status: 'PENDING' | 'POSITIVE' | 'NEGATIVE';
+  @IsEnum(STATUS, { message: isStatus() })
+  status?: 'PENDING' | 'POSITIVE' | 'NEGATIVE';
 }

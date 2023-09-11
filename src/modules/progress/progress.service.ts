@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ProgressRepository } from './progress.repository';
 import { JobsService } from '../jobs/jobs.service';
 import { UpdateProgressDto } from './dto/update-progress.dto';
@@ -17,21 +17,6 @@ export class ProgressService {
   ) {
     await this.jobsService.isUserNotDisable(userId);
     await this.jobsService.findJob(userId, jobId);
-
-    if (progressData.status) {
-      switch (progressData.status) {
-        case 'NEGATIVE':
-          break;
-        case 'PENDING':
-          break;
-        case 'POSITIVE':
-          break;
-        default:
-          throw new BadRequestException(
-            'status aceita apenas os três seguintes valores: PENDING, POSITIVE e NEGATIVE',
-          );
-      }
-    }
     const progress = await this.progressRepository.update(jobId, progressData);
 
     return progress;

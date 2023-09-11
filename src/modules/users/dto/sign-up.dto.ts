@@ -21,6 +21,7 @@ export class SignUpDto {
   @IsNotEmpty({ message: isNotEmpty('username') })
   username: string;
 
+  @MaxLength(50, { message: maxLength('email', 50) })
   @IsEmail({}, { message: isEmail('email') })
   @IsString({ message: isString('email') })
   @IsNotEmpty({ message: isNotEmpty('email') })
@@ -38,7 +39,8 @@ export class SignUpDto {
   google_id?: string;
 
   @IsOptional()
-  @IsString({ message: isString('google_email') })
+  @MaxLength(50, { message: maxLength('google_email', 50) })
   @IsEmail({}, { message: isEmail('google_email') })
+  @IsString({ message: isString('google_email') })
   google_email?: string;
 }
