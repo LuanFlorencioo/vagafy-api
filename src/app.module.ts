@@ -8,7 +8,15 @@ import { ProgressModule } from './modules/progress/progress.module';
 import { CheckpointsModule } from './modules/checkpoints/checkpoints.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), UsersModule, JobsModule, CompaniesModule, RecruitersModule, ProgressModule, CheckpointsModule],
+  imports: [
+    ConfigModule.forRoot(),
+    UsersModule,
+    JobsModule,
+    CompaniesModule,
+    RecruitersModule,
+    ProgressModule,
+    CheckpointsModule,
+  ],
   controllers: [],
   providers: [],
 })
